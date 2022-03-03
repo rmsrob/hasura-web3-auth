@@ -36,8 +36,8 @@ function getHeaders() {
   console.log("apollo token", token);
   const headers = {
     "content-Type": "application/json",
-    "x-hasura-admin-secret": `${process.env.NEXT_PUBLIC_GRAPHQL_ADMIN_SECRET}`,
-    // Authorization: `Bearer ${token}`,
+    // "x-hasura-admin-secret": `${process.env.NEXT_PUBLIC_GRAPHQL_ADMIN_SECRET}`,
+    Authorization: `Bearer ${token}`,
   } as CommonHeaderProperties;
   return headers;
 }
@@ -88,7 +88,7 @@ function createLink() {
   // Only use token refresh link on the client
   if (typeof window !== "undefined") {
     return ApolloLink.from([
-      // tokenRefreshLink, // ! active me for jwt roles
+      tokenRefreshLink, // ! active me for jwt roles
       authLink,
       // Use "getOrCreateWebsocketLink" to init WS lazily
       // otherwise WS connection will be created + used even if using "query"

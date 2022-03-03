@@ -118,6 +118,7 @@ export const updateUserRefreshToken = async (
   const q = `mutation UpdateUserRefreshToken($id: uuid!, $refresh_token: String!, $refresh_token_expires_at: timestamptz!) {
     update_user_by_pk(pk_columns: {id: $id}, _set: {refresh_token: $refresh_token, refresh_token_expires_at: $refresh_token_expires_at}) {
       id
+      address
       refresh_token
     }
   }`;

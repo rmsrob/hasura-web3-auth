@@ -47,6 +47,18 @@ export function generateHasuraJWT(params: GenerateJWTParams) {
   });
 }
 
+export function signJwt(fingerprint: string, user: any) {
+  return generateHasuraJWT({
+    allowedRoles: ["user"],
+    defaultRole: "user",
+    expiresIn: "5m",
+    otherClaims: {
+      "X-Hasura-User-Id": String(user.id),
+      "X-User-Fingerprint": sha256(fingerprint),
+    },
+  });
+}
+
 // export function getJwtToken() {
 //   return sessionStorage.getItem("jwt");
 // }
