@@ -14,7 +14,7 @@ cd hasura
 # copy .env.example to .env and create JWT token inside your .env
 make jwt
 # create docker network
-docker network create app-netrunner-olympusdao
+docker network create netrunner-web3-auth
 ```
 
 ```sh
@@ -31,4 +31,9 @@ make migrate
 hasura metadata apply --endpoint "${HASURA_STAGING_ENDPOINT}" --admin-secret "${HASURA_GRAPHQL_ADMIN_SECRET}"
 
 hasura migrate apply --endpoint "${HASURA_STAGING_ENDPOINT}" --admin-secret "${HASURA_GRAPHQL_ADMIN_SECRET}"
+```
+
+```sh
+make console
+# to launch the Hasura GUI on port 9596
 ```
