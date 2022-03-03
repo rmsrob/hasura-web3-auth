@@ -1,0 +1,37 @@
+actions:
+- name: refreshJwtToken
+  definition:
+    kind: ""
+    handler: '{{ACTION_BASE_URL}}/api/hasura-refresh-jwt'
+  permissions:
+  - role: user
+  comment: refreshJwtToken
+- name: signin
+  definition:
+    kind: ""
+    handler: '{{ACTION_BASE_URL}}/api/hasura-signin'
+  permissions:
+  - role: user
+  comment: user signIn
+- name: signout
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/api/hasura-signout'
+  permissions:
+  - role: user
+- name: signup
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/api/hasura-signup'
+  permissions:
+  - role: user
+custom_types:
+  enums: []
+  input_objects:
+  - name: SignInInput
+  - name: SignupInput
+  objects:
+  - name: AccessTokens
+  - name: JwtToken
+  - name: SignoutOutput
+  scalars: []

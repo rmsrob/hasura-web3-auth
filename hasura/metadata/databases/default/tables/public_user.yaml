@@ -1,0 +1,51 @@
+table:
+  name: user
+  schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - address
+    - chainId
+    - created_at
+    - id
+    - refresh_token
+    - refresh_token_expires_at
+    - updated_at
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - address
+    - chainId
+    - created_at
+    - id
+    - refresh_token
+    - refresh_token_expires_at
+    - updated_at
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - address
+    - chainId
+    - created_at
+    - id
+    - refresh_token
+    - refresh_token_expires_at
+    - updated_at
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user
+delete_permissions:
+- permission:
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
+  role: user

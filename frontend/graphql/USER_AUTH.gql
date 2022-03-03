@@ -1,0 +1,28 @@
+mutation USER_SIGNUP($address: String!) {
+  signup(params: { address: $address }) {
+    jwt
+    refreshToken
+  }
+}
+
+query USER_LOGIN($address: String!) {
+  signin(params: { address: $address }) {
+    jwt
+    refreshToken
+  }
+}
+
+mutation USER_SIGNOUT {
+  signout {
+    ok
+  }
+}
+
+query USER_REFRESH_TOKEN($refreshToken: String!, $fingerprintHash: String!) {
+  refreshJwtToken(
+    refreshToken: $refreshToken
+    fingerprintHash: $fingerprintHash
+  ) {
+    jwt
+  }
+}

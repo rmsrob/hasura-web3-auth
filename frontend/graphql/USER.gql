@@ -1,0 +1,21 @@
+query USER_CHECK_ADDRESS($address: String!) {
+  user(where: { address: { _eq: $address } }) {
+    id
+  }
+}
+
+mutation USER_INSERT_ONE($user: user_insert_input!) {
+  insert_user_one(object: $user) {
+    id
+  }
+}
+
+query HASURA_ME {
+  user {
+    id
+    address
+    chainId
+    refresh_token
+    refresh_token_expires_at
+  }
+}

@@ -1,0 +1,50 @@
+version: "3.6"
+
+services:
+  postgres:
+    image: postgres:13.4
+    container_name: ${PGSQL_HOST}
+    ports:
+      - "${PGSQL_PORT}:5432"
+    networks:
+      - external-app-proxy
+    restart: always
+    volumes:
+      - hasura_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  graphql-engine:
+    image: hasura/graphql-engine:v2.2.1
+    container_name: jwt_hasura_engine
+    ports:
+      - 8080:8080
+    networks:
+      - external-app-proxy
+    depends_on:
+      - postgres
+    restart: always
+    environment:
+      ## postgres database to store Hasura metadata
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${PGSQL_HOST}:5432/${POSTGRES_DB}
+      HASURA_GRAPHQL_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${PGSQL_HOST}:5432/${POSTGRES_DB}
+      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
+      PG_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${PGSQL_HOST}:5432/${POSTGRES_DB}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false"
+      HASURA_GRAPHQL_DEV_MODE: "false"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"HS256", "key": "${HASURA_GRAPHQL_JWT_SECRET}"}'
+      ACTION_BASE_URL: 'http://host.docker.internal:3000'
+
+networks:
+  external-app-proxy:
+    name: ${HASURA_NETWORK_NAME}
+    external: true
+
+volumes:
+  hasura_data:
+    name: ${HASURA_VOLUME_NAME}
