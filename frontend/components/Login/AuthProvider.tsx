@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { SiweMessage } from "siwe";
 import { useAccount, useNetwork, useSignMessage } from "wagmi";
+import useStorage from "../../hooks/useStorage";
 
 const authFech = (path: string, options?: RequestInit) =>
   fetch(`/api/${path}`, options).then((res) => res.json());
@@ -25,8 +26,8 @@ const createSiweMessage = async (address: string, chainId: number) => {
   }).prepareMessage();
 };
 
-const verifySignature = async (message: string, signature: string) =>
-  authFech("verify-siwe", {
+const login = async (message: string, signature: string) =>
+  authFech("login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message, signature }),
@@ -78,6 +79,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     address: undefined,
   });
 
+  const { setItem, removeItem } = useStorage();
+
   const signIn = useCallback(async () => {
     const address = account.data?.address;
     const chainId = network.data.chain?.id;
@@ -94,17 +97,24 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (signature.error) throw signature.error;
 
       // Verify signature
-      const verification = await verifySignature(message, signature.data);
-      if (!verification.ok) throw new Error("Error verifying message");
+      const { jwt, refreshToken, ok } = await login(message, signature.data);
+      if (!ok) throw new Error("Error on login");
+
+      setItem("jwt", jwt);
+      setItem("refreshToken", refreshToken);
 
       setState((x) => ({ ...x, address, loading: false }));
     } catch (error: any) {
+      console.log(error);
+
       setState((x) => ({ ...x, error, loading: false }));
     }
   }, [account.data?.address, network.data.chain?.id, signMessage]);
 
   const signOut = useCallback(async () => {
     disconnect();
+    removeItem("jwt");
+    removeItem("refreshToken");
     setState({
       loading: false,
       error: undefined,

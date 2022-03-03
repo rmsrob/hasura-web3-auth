@@ -1,11 +1,17 @@
+import { serialize } from "cookie";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ironOptions } from "./verify-siwe";
+import { FINGERPRINT_COOKIE_NAME } from "../../libs/userCookieJWT";
+import { ironOptions } from "./login";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
   switch (method) {
     case "GET":
+      // res.setHeader(
+      //   "Set-Cookie",
+      //   serialize(FINGERPRINT_COOKIE_NAME, "", { maxAge: -1, path: "/" })
+      // );
       req.session.destroy();
       res.send({ ok: true });
       break;
