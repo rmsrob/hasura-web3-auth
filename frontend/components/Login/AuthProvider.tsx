@@ -140,7 +140,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     (async () => await handler())();
 
     // 2. window is focused (in case user logs out of another window)
-    // ? removed because it blocked the refresh and display the user!
     window.addEventListener("focus", handler);
     return () => window.removeEventListener("focus", handler);
   }, []);

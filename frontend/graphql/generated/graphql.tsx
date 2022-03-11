@@ -508,25 +508,6 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
-export type User_Check_AddressQueryVariables = Exact<{
-  address: Scalars['String'];
-}>;
-
-
-export type User_Check_AddressQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', id: any }> };
-
-export type User_Insert_OneMutationVariables = Exact<{
-  user: User_Insert_Input;
-}>;
-
-
-export type User_Insert_OneMutation = { __typename?: 'mutation_root', insert_user_one?: { __typename?: 'user', id: any } | null };
-
-export type Hasura_MeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type Hasura_MeQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', id: any, address?: string | null, chainId?: number | null, refresh_token?: string | null, refresh_token_expires_at?: any | null }> };
-
 export type User_SignupMutationVariables = Exact<{
   address: Scalars['String'];
 }>;
@@ -554,113 +535,26 @@ export type User_Refresh_TokenQueryVariables = Exact<{
 
 export type User_Refresh_TokenQuery = { __typename?: 'query_root', refreshJwtToken: { __typename?: 'JwtToken', jwt: string } };
 
+export type User_Check_AddressQueryVariables = Exact<{
+  address: Scalars['String'];
+}>;
 
-export const User_Check_AddressDocument = gql`
-    query USER_CHECK_ADDRESS($address: String!) {
-  user(where: {address: {_eq: $address}}) {
-    id
-  }
-}
-    `;
 
-/**
- * __useUser_Check_AddressQuery__
- *
- * To run a query within a React component, call `useUser_Check_AddressQuery` and pass it any options that fit your needs.
- * When your component renders, `useUser_Check_AddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUser_Check_AddressQuery({
- *   variables: {
- *      address: // value for 'address'
- *   },
- * });
- */
-export function useUser_Check_AddressQuery(baseOptions: Apollo.QueryHookOptions<User_Check_AddressQuery, User_Check_AddressQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<User_Check_AddressQuery, User_Check_AddressQueryVariables>(User_Check_AddressDocument, options);
-      }
-export function useUser_Check_AddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<User_Check_AddressQuery, User_Check_AddressQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<User_Check_AddressQuery, User_Check_AddressQueryVariables>(User_Check_AddressDocument, options);
-        }
-export type User_Check_AddressQueryHookResult = ReturnType<typeof useUser_Check_AddressQuery>;
-export type User_Check_AddressLazyQueryHookResult = ReturnType<typeof useUser_Check_AddressLazyQuery>;
-export type User_Check_AddressQueryResult = Apollo.QueryResult<User_Check_AddressQuery, User_Check_AddressQueryVariables>;
-export const User_Insert_OneDocument = gql`
-    mutation USER_INSERT_ONE($user: user_insert_input!) {
-  insert_user_one(object: $user) {
-    id
-  }
-}
-    `;
-export type User_Insert_OneMutationFn = Apollo.MutationFunction<User_Insert_OneMutation, User_Insert_OneMutationVariables>;
+export type User_Check_AddressQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', id: any }> };
 
-/**
- * __useUser_Insert_OneMutation__
- *
- * To run a mutation, you first call `useUser_Insert_OneMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUser_Insert_OneMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [userInsertOneMutation, { data, loading, error }] = useUser_Insert_OneMutation({
- *   variables: {
- *      user: // value for 'user'
- *   },
- * });
- */
-export function useUser_Insert_OneMutation(baseOptions?: Apollo.MutationHookOptions<User_Insert_OneMutation, User_Insert_OneMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<User_Insert_OneMutation, User_Insert_OneMutationVariables>(User_Insert_OneDocument, options);
-      }
-export type User_Insert_OneMutationHookResult = ReturnType<typeof useUser_Insert_OneMutation>;
-export type User_Insert_OneMutationResult = Apollo.MutationResult<User_Insert_OneMutation>;
-export type User_Insert_OneMutationOptions = Apollo.BaseMutationOptions<User_Insert_OneMutation, User_Insert_OneMutationVariables>;
-export const Hasura_MeDocument = gql`
-    query HASURA_ME {
-  user {
-    id
-    address
-    chainId
-    refresh_token
-    refresh_token_expires_at
-  }
-}
-    `;
+export type User_Insert_OneMutationVariables = Exact<{
+  user: User_Insert_Input;
+}>;
 
-/**
- * __useHasura_MeQuery__
- *
- * To run a query within a React component, call `useHasura_MeQuery` and pass it any options that fit your needs.
- * When your component renders, `useHasura_MeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHasura_MeQuery({
- *   variables: {
- *   },
- * });
- */
-export function useHasura_MeQuery(baseOptions?: Apollo.QueryHookOptions<Hasura_MeQuery, Hasura_MeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<Hasura_MeQuery, Hasura_MeQueryVariables>(Hasura_MeDocument, options);
-      }
-export function useHasura_MeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Hasura_MeQuery, Hasura_MeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<Hasura_MeQuery, Hasura_MeQueryVariables>(Hasura_MeDocument, options);
-        }
-export type Hasura_MeQueryHookResult = ReturnType<typeof useHasura_MeQuery>;
-export type Hasura_MeLazyQueryHookResult = ReturnType<typeof useHasura_MeLazyQuery>;
-export type Hasura_MeQueryResult = Apollo.QueryResult<Hasura_MeQuery, Hasura_MeQueryVariables>;
+
+export type User_Insert_OneMutation = { __typename?: 'mutation_root', insert_user_one?: { __typename?: 'user', id: any } | null };
+
+export type Hasura_MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Hasura_MeQuery = { __typename?: 'query_root', user: Array<{ __typename?: 'user', id: any, address?: string | null, chainId?: number | null, refresh_token?: string | null, refresh_token_expires_at?: any | null }> };
+
+
 export const User_SignupDocument = gql`
     mutation USER_SIGNUP($address: String!) {
   signup(params: {address: $address}) {
@@ -799,3 +693,109 @@ export function useUser_Refresh_TokenLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type User_Refresh_TokenQueryHookResult = ReturnType<typeof useUser_Refresh_TokenQuery>;
 export type User_Refresh_TokenLazyQueryHookResult = ReturnType<typeof useUser_Refresh_TokenLazyQuery>;
 export type User_Refresh_TokenQueryResult = Apollo.QueryResult<User_Refresh_TokenQuery, User_Refresh_TokenQueryVariables>;
+export const User_Check_AddressDocument = gql`
+    query USER_CHECK_ADDRESS($address: String!) {
+  user(where: {address: {_eq: $address}}) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useUser_Check_AddressQuery__
+ *
+ * To run a query within a React component, call `useUser_Check_AddressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUser_Check_AddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUser_Check_AddressQuery({
+ *   variables: {
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useUser_Check_AddressQuery(baseOptions: Apollo.QueryHookOptions<User_Check_AddressQuery, User_Check_AddressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<User_Check_AddressQuery, User_Check_AddressQueryVariables>(User_Check_AddressDocument, options);
+      }
+export function useUser_Check_AddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<User_Check_AddressQuery, User_Check_AddressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<User_Check_AddressQuery, User_Check_AddressQueryVariables>(User_Check_AddressDocument, options);
+        }
+export type User_Check_AddressQueryHookResult = ReturnType<typeof useUser_Check_AddressQuery>;
+export type User_Check_AddressLazyQueryHookResult = ReturnType<typeof useUser_Check_AddressLazyQuery>;
+export type User_Check_AddressQueryResult = Apollo.QueryResult<User_Check_AddressQuery, User_Check_AddressQueryVariables>;
+export const User_Insert_OneDocument = gql`
+    mutation USER_INSERT_ONE($user: user_insert_input!) {
+  insert_user_one(object: $user) {
+    id
+  }
+}
+    `;
+export type User_Insert_OneMutationFn = Apollo.MutationFunction<User_Insert_OneMutation, User_Insert_OneMutationVariables>;
+
+/**
+ * __useUser_Insert_OneMutation__
+ *
+ * To run a mutation, you first call `useUser_Insert_OneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUser_Insert_OneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userInsertOneMutation, { data, loading, error }] = useUser_Insert_OneMutation({
+ *   variables: {
+ *      user: // value for 'user'
+ *   },
+ * });
+ */
+export function useUser_Insert_OneMutation(baseOptions?: Apollo.MutationHookOptions<User_Insert_OneMutation, User_Insert_OneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<User_Insert_OneMutation, User_Insert_OneMutationVariables>(User_Insert_OneDocument, options);
+      }
+export type User_Insert_OneMutationHookResult = ReturnType<typeof useUser_Insert_OneMutation>;
+export type User_Insert_OneMutationResult = Apollo.MutationResult<User_Insert_OneMutation>;
+export type User_Insert_OneMutationOptions = Apollo.BaseMutationOptions<User_Insert_OneMutation, User_Insert_OneMutationVariables>;
+export const Hasura_MeDocument = gql`
+    query HASURA_ME {
+  user {
+    id
+    address
+    chainId
+    refresh_token
+    refresh_token_expires_at
+  }
+}
+    `;
+
+/**
+ * __useHasura_MeQuery__
+ *
+ * To run a query within a React component, call `useHasura_MeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHasura_MeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHasura_MeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHasura_MeQuery(baseOptions?: Apollo.QueryHookOptions<Hasura_MeQuery, Hasura_MeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Hasura_MeQuery, Hasura_MeQueryVariables>(Hasura_MeDocument, options);
+      }
+export function useHasura_MeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Hasura_MeQuery, Hasura_MeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Hasura_MeQuery, Hasura_MeQueryVariables>(Hasura_MeDocument, options);
+        }
+export type Hasura_MeQueryHookResult = ReturnType<typeof useHasura_MeQuery>;
+export type Hasura_MeLazyQueryHookResult = ReturnType<typeof useHasura_MeLazyQuery>;
+export type Hasura_MeQueryResult = Apollo.QueryResult<Hasura_MeQuery, Hasura_MeQueryVariables>;
