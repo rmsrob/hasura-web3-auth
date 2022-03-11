@@ -79,7 +79,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     address: undefined,
   });
 
-  const { setItem, removeItem } = useStorage();
+  const { getItem, setItem, removeItem } = useStorage();
 
   const signIn = useCallback(async () => {
     const address = account.data?.address;
@@ -100,8 +100,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       const { jwt, refreshToken, ok } = await login(message, signature.data);
       if (!ok) throw new Error("Error on login");
 
-      setItem("jwt", jwt);
-      setItem("refreshToken", refreshToken);
+      setItem("jwt", jwt, "session");
+      setItem("refreshToken", refreshToken, "session");
 
       setState((x) => ({ ...x, address, loading: false }));
     } catch (error: any) {
@@ -113,8 +113,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const signOut = useCallback(async () => {
     disconnect();
-    removeItem("jwt");
-    removeItem("refreshToken");
+    removeItem("jwt", "session");
+    removeItem("refreshToken", "session");
     setState({
       loading: false,
       error: undefined,
@@ -129,7 +129,9 @@ export const AuthProvider: React.FC = ({ children }) => {
       try {
         setState((x) => ({ ...x, error: undefined, loading: true }));
         const me = await authFech("me");
+        // console.log("me", me);
         setState((x) => ({ ...x, address: me.address, loading: false }));
+        // call HASURA_ME query with jwt token
       } catch (error: any) {
         setState((x) => ({ ...x, error, loading: false }));
       }
@@ -139,8 +141,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     // 2. window is focused (in case user logs out of another window)
     // ? removed because it blocked the refresh and display the user!
-    // window.addEventListener("focus", handler);
-    // return () => window.removeEventListener("focus", handler);
+    window.addEventListener("focus", handler);
+    return () => window.removeEventListener("focus", handler);
   }, []);
 
   return (

@@ -1,4 +1,3 @@
-import { useAccount, useNetwork } from "wagmi";
 import { useAuth } from "./AuthProvider";
 
 const Signin = (props: any) => {

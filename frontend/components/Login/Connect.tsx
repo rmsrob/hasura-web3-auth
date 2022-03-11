@@ -9,6 +9,7 @@ const Connect = () => {
   const { signIn } = useAuth();
   const [shouldSignIn, setShouldSignIn] = useState(false);
   useEffect(() => {
+    // check also SignedWallet
     if (!shouldSignIn) return;
     signIn();
     setShouldSignIn(false);
