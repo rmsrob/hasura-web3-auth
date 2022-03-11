@@ -30,21 +30,25 @@ export function makeTokenRefreshLink() {
       return isValid;
     },
     fetchAccessToken: async () => {
+      // TODO get jwt from session storage
       // const jwt = decodeJWT(getItem("jwt", "session")) as string;
+      // TODO get fingerprintHash from jwt
       // console.log("decoded jwt:", jwt);
       // const fingerprintHash = jwt?.["https://hasura.io/jwt/claims" as any]?.[
       //   "X-User-Fingerprint" as any
       // ] as string;
-
       // ! can't perform well the checking of the fingerprint
       const fingerprintHash = "lol";
 
       const refreshToken = getItem("refreshToken", "session");
       // console.log("old refresh token: ", refreshToken);
+      // TODO use admin Query to do api/hasura-refresh to refresh the jwt and update user refreshToken on db
       const requestJwt = await userRefreshToken(refreshToken, fingerprintHash);
       const newJwt = requestJwt.jwt;
       // console.log("set user new jwt", newJwt);
       setItem("jwt", newJwt, "session");
+      // TODO do useEffect setItem("refreshToken") right now on pages/user
+      // TODO do useEffect to setItem("refreshToken") asap (now on /Login/SignedWallet)
       return newJwt;
     },
     handleFetch: (accessToken) => {

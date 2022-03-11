@@ -6,6 +6,7 @@ const UserPage = () => {
   const { loading, error, data } = useHasura_MeQuery();
   const { setItem } = useStorage();
 
+  // TODO write the new refreshToken for the user
   useEffect(() => {
     setItem("refreshToken", data?.user[0].refresh_token, "session");
   }, [data]);
