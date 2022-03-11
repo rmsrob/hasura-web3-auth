@@ -36,8 +36,6 @@ export async function axiosHasura(
   return response;
 }
 
-// used inside /api/hasura-signin
-// used inside /api/hasura-refresh-jwt
 export const findUser = async (address: string) => {
   const q = `query UserByAddress($address: String!){
       user(where: {address: {_eq: $address}}) {
@@ -73,17 +71,17 @@ export const findUserf = async (refreshToken: string) => {
   const v = { refreshToken };
 
   const request = await axiosHasura("UserByFingerprint", q, v);
-  console.log("UserByFingerprint", request);
+  // console.log("UserByFingerprint var", v);
   if (request.data.errors) {
     return console.log("error", request.data.errors[0].message);
   } else {
     const user = await request.data.data.user[0];
+    // console.log("user", user);
     return user;
   }
 };
 
 // We must get the user address and build for him the tokens then send the update to Hasura
-// used inside /api/hasura-signup
 export const insertUser = async (
   address: string,
   refresh_token: string,
@@ -98,7 +96,7 @@ export const insertUser = async (
   const v = { address, refresh_token, refresh_token_expires_at };
 
   const request = await axiosHasura("InsertUser", q, v);
-  console.log("InsertUser", request);
+  // console.log("InsertUser", request);
   if (request.data.errors) {
     return console.log("error", request.data.errors[0].message);
   } else {
@@ -108,8 +106,6 @@ export const insertUser = async (
 };
 
 // we need to capture the Hasura ID of the user then re build the tokens and update his data
-// used inside /api/hasura-refresh-jwt
-// used inside /api/hasura-signin
 export const updateUserRefreshToken = async (
   id: string,
   refresh_token: string,
@@ -131,5 +127,26 @@ export const updateUserRefreshToken = async (
   } else {
     const user = request.data.data.update_user_by_pk;
     return user;
+  }
+};
+
+export const userRefreshToken = async (
+  refreshToken: string,
+  fingerprintHash: string
+) => {
+  const q = `query RefreshJwtToken($refreshToken: String!, $fingerprintHash: String!) {
+    refreshJwtToken(refreshToken: $refreshToken, fingerprintHash: $fingerprintHash) {
+      jwt
+    }
+  }`;
+  const v = { refreshToken, fingerprintHash };
+
+  const request = await axiosHasura("RefreshJwtToken", q, v);
+  // console.log("RefreshJwtToken", request);
+  if (request.data.errors) {
+    return console.log("error", request.data.errors[0].message);
+  } else {
+    const jwt = request.data.data.refreshJwtToken;
+    return jwt;
   }
 };

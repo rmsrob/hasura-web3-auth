@@ -29,14 +29,12 @@ const URI =
     ? "http://localhost:8080/v1/graphql"
     : (process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string);
 
-// ? we will not use apollo with admin token. we will do that only with "fetch"
-// ? apollo will be used only with user jwt
+// ? apollo use the user jwt
 function getHeaders() {
   const token = getItem("jwt", "session");
-  console.log("apollo token", token);
+  // console.log("apollo token", token);
   const headers = {
     "content-Type": "application/json",
-    // "x-hasura-admin-secret": `${process.env.NEXT_PUBLIC_GRAPHQL_ADMIN_SECRET}`,
     Authorization: `Bearer ${token}`,
   } as CommonHeaderProperties;
   return headers;
@@ -85,8 +83,10 @@ function createLink() {
 
   const tokenRefreshLink = makeTokenRefreshLink();
 
+  // check if we are on the server with typof window
   // Only use token refresh link on the client
   if (typeof window !== "undefined") {
+    // console.log("request Header", getHeaders());
     return ApolloLink.from([
       tokenRefreshLink, // ! active me for jwt roles
       authLink,

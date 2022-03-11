@@ -7,9 +7,7 @@ import {
   updateUserRefreshToken,
 } from "../../libs/admin_fetchUser";
 import { signJwt, uuidv4 } from "../../libs/jwt";
-import crypto from "crypto";
-import { setFingerprintCookieAndSignJwt } from "../../libs/userCookieJWT";
-import { getIronSession, sealData } from "iron-session";
+import { sealData } from "iron-session";
 
 // TODO verifying a SIWE message and creating the user session.
 // typings of req.session.*
