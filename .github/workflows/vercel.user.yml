@@ -28,11 +28,9 @@ jobs:
  
       - name: 📦 Build
         run: |
-          cd $LAMBDA_PATH
-          echo $PATH
           yarn install --frozen-lockfile
         shell: bash
-        # working-directory: ./temp
+        working-directory: ./$LAMBDA_PATH
 
       # - name: 🚀 Deploy to Vercel Prod
       #   id: deploy-vercel-production
