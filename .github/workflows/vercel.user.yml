@@ -32,7 +32,7 @@ jobs:
  
       - name: 📦 Build
         run: |
-          cd '${{ jobs.lamda-dir.env.PATH }}'
+          cd '${{ steps.lamda-dir.env.PATH }}'
           yarn install --frozen-lockfile
  
       # - name: 🚀 Deploy to Vercel Prod
