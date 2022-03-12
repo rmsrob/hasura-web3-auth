@@ -5,7 +5,7 @@ const handler = (request: VercelRequest, response: VercelResponse) => {
     return response.json({
       data: {
         status: 200,
-        response: { data: "ok" },
+        response: { data: "ok ser!" },
       },
     });
   } catch (error) {

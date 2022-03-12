@@ -9,6 +9,8 @@ on:
     paths:
       - 'lambda/user'
 
+  workflow_dispatch:
+
 jobs:
   vercel-lambda-checks:
     runs-on: ubuntu-latest
