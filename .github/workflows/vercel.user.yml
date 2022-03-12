@@ -20,7 +20,7 @@ jobs:
  
       - name: 🔗 Lambda directory path
         id: lamda-dir
-        name: 'lamda/user'
+        path: 'lamda/user'
 
       - name: 🏗 Setup Node 14
         uses: actions/setup-node@v2
@@ -29,7 +29,7 @@ jobs:
  
       - name: 📦 Build
         run: |
-          cd '${{ jobs.lamda-dir.name }}'
+          cd '${{ jobs.lamda-dir.path }}'
           yarn install --frozen-lockfile
  
       # - name: 🚀 Deploy to Vercel Prod
