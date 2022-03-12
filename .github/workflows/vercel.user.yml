@@ -23,6 +23,7 @@ jobs:
         # path: 'lamda/user'
         env:
           PATH: 'lamda/user'
+        run: echo running...
 
       - name: 🏗 Setup Node 14
         uses: actions/setup-node@v2
