@@ -20,8 +20,8 @@ jobs:
  
       - name: 🔗 Lambda directory path
         id: lamda-dir
-        run: echo "::set-output name=path::'lambda/user'"
- 
+        name: 'lamda/user'
+
       - name: 🏗 Setup Node 14
         uses: actions/setup-node@v2
         with:
@@ -29,7 +29,7 @@ jobs:
  
       - name: 📦 Build
         run: |
-          cd lambda/user
+          cd '${{ jobs.lamda-dir.name }}'
           yarn install --frozen-lockfile
  
       # - name: 🚀 Deploy to Vercel Prod
@@ -42,7 +42,7 @@ jobs:
       #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
       #     vercel-args: '--prod' 
       #     scope: ${{ secrets.VERCEL_ORG_ID }}
-      #     working-directory: ./${{ steps.lambda-dir.outputs.path }}
+      #     working-directory: ./lambda/user
 
       # - name: 💬 Comment pr
       #   uses: phulsechinmay/rewritable-pr-comment@v0.3.0
