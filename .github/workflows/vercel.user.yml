@@ -11,19 +11,15 @@ on:
 
   workflow_dispatch:
 
+env:
+  LAMBDA_PATH: 'lambda/user'
+
 jobs:
   vercel-lambda-checks:
     runs-on: ubuntu-latest
     steps:
       - name: 🏗 Setup repo
         uses: actions/checkout@v2
- 
-      - name: 🔗 Lambda directory path
-        id: lamda-dir
-        # path: 'lamda/user'
-        env:
-          PATH: 'lamda/user'
-        run: echo running...
 
       - name: 🏗 Setup Node 14
         uses: actions/setup-node@v2
@@ -32,9 +28,12 @@ jobs:
  
       - name: 📦 Build
         run: |
-          cd '${{ steps.lamda-dir.env.PATH }}'
+          cd $LAMBDA_PATH
+          echo $PATH
           yarn install --frozen-lockfile
- 
+        shell: bash
+        # working-directory: ./temp
+
       # - name: 🚀 Deploy to Vercel Prod
       #   id: deploy-vercel-production
       #   uses: amondnet/vercel-action@v20
