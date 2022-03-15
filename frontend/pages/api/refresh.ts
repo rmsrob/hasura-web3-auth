@@ -6,13 +6,14 @@ import { findUserf, updateUserRefreshToken } from "../../libs/admin_fetchUser";
 // import { sealData } from "iron-session";
 // import useStorage from "../../hooks/useStorage";
 
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: true,
+//   },
+// };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log("api/refresh called");
   // TODO get the fingerprintHash from jwt session
   const { refreshToken } = req.body.input; //fingerprintHash
   // console.log("req body token", req.body.input)
