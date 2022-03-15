@@ -34,9 +34,9 @@ jobs:
         #   - postgres
         # restart: always
         env:
-          HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
-          HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
-          PG_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+          HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+          HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+          PG_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
           HASURA_GRAPHQL_ADMIN_SECRET: hasuraadminpassword
         ports:
           - 8080:8080
@@ -74,7 +74,7 @@ jobs:
       - name: 🐳 Hasura metadata
         run: |
           cd hasura
-          hasura migrate apply --endpoint http://localhost:8080 --admin-secret hasuraadminpassword
+          hasura migrate apply --skip-update-check --endpoint http://localhost:8080 --admin-secret hasuraadminpassword
 
       # - name: 🐳 Hasura migrate
       #   run: |
