@@ -30,8 +30,8 @@ jobs:
         
       hasura:
         image: hasura/graphql-engine:latest
-        depends_on:
-          - postgres
+        # depends_on:
+        #   - postgres
         # restart: always
         environment:
           HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
