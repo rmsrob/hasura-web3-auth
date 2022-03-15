@@ -74,9 +74,7 @@ jobs:
       - name: 🐳 Hasura metadata
         run: |
           cd hasura
-          hasura migrate status --skip-update-check --endpoint http://localhost:8080
-          
-      # --endpoint "http://localhost:8080" --admin-secret "hasuraadminpassword"
+          hasura migrate apply --endpoint http://localhost:8080 --admin-secret hasuraadminpassword
 
       # - name: 🐳 Hasura migrate
       #   run: |
