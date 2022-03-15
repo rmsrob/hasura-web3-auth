@@ -17,18 +17,26 @@ jobs:
     services:
       postgres:
         image: postgres:13.4
-        env:
+        environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgrespassword
         ports:
         # will assign a random free host port
-        - 5432:5432
+          - 5432:5432
         # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        # options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        restart: always
       hasura:
         image: hasura/graphql-engine:latest
-        env:
+        depends_on:
+          - postgres
+        restart: always
+        environment:
+          HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
           HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+          PG_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+          HASURA_GRAPHQL_ADMIN_SECRET: hasuraadminpassword
         ports:
           - 8080:8080
 
