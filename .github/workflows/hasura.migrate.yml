@@ -40,12 +40,12 @@ jobs:
       - name: 🐳 jwt
         run: |
           cd hasura
-          make jwt
+          docker network create netrunner-web3-auth
+          cp -i .env.example .env
 
       - name: 🐳 up
         run: |
           cd hasura
-          make jwt
           docker-compose up -d
 
       - name: 🐳 Hasura metadata
