@@ -21,7 +21,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: postgres
           POSTGRES_PASSWORD: postgrespassword
-        restart: always
+        # restart: always
         ports:
         # will assign a random free host port
           - 5432:5432
@@ -32,7 +32,7 @@ jobs:
         image: hasura/graphql-engine:latest
         depends_on:
           - postgres
-        restart: always
+        # restart: always
         environment:
           HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
           HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
