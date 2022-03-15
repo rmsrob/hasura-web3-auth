@@ -52,17 +52,17 @@ jobs:
         run: |
           docker ps
           cd hasura
-          hasura metadata apply --endpoint http://localhost:8080
+          hasura metadata apply --endpoint "http://localhost:8080" --admin-secret "hasuraadminpassword"
 
       - name: 🐳 Hasura migrate
         run: |
           cd hasura
-          hasura migrate apply --endpoint http://localhost:8080
+          hasura migrate apply --endpoint "http://localhost:8080" --admin-secret "hasuraadminpassword"
 
       - name: 🐳 Hasura metadata
         run: |
           cd hasura
-          hasura metadata reload --endpoint http://localhost:8080
+          hasura metadata reload --endpoint "http://localhost:8080" --admin-secret "hasuraadminpassword"
 
       - name: 🐳 Docker up and metadata
         run: |
